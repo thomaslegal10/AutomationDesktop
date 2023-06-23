@@ -117,12 +117,6 @@ namespace AutomationDesktop
             new Thread(new ThreadStart(StartProccess)).Start();
         }
 
-        private const int MOUSEEVENTF_LEFTDOWN = 0x0002;
-        private const int MOUSEEVENTF_LEFTUP = 0x0004;
-
-        [DllImport("user32.dll")]
-        private static extern void mouse_event(int dwFlags, int dx, int dy, int dwData, int dwExtraInfo);
-
         private void StartProccess()
         {
             foreach (var command in commands)
@@ -135,9 +129,7 @@ namespace AutomationDesktop
                         Thread.Sleep(1000);
                         Cursor.Position = command.Value;
 
-                        mouse_event(MOUSEEVENTF_LEFTDOWN, 0, 0, 0, 0);
-                        Thread.Sleep(100);
-                        mouse_event(MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);
+                        VirtualMouse.LeftClick();
                     });
                 }
                 else
